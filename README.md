@@ -1,3 +1,3 @@
 # Docker-FullCycle
 
-Desafios realizados durante o curso FullCycle Developer
+Desafios realizados durante o módulo de docker no curso FullCycle Developer
