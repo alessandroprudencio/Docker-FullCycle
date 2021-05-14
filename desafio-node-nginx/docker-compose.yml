@@ -1,0 +1,51 @@
+version: '3'
+
+services: 
+    app:
+        build: 
+            context: .
+            dockerfile: Dockerfile.node
+        container_name: app
+        entrypoint: dockerize -wait tcp://db:3306 -timeout 20s yarn run start
+        volumes: 
+            - ./:/usr/src/app
+        networks: 
+            - node-nginx-net
+        depends_on: 
+            - db
+        restart: always
+        ports: 
+            - "3000:3000"
+    db:
+        image: mysql:8.0.25
+        volumes: 
+            - ./db/mysql-data:/var/lib/mysql
+        restart: always
+        command: --default-authentication-plugin=mysql_native_password
+        container_name: db
+        networks: 
+            - node-nginx-net
+        environment:
+            MYSQL_DATABASE: nodenginx
+            MYSQL_ROOT_PASSWORD: root
+        ports: 
+            - "3306:3306"
+    nginx:
+        entrypoint: dockerize -wait tcp://app:3000 -timeout 20s
+        command: /bin/sh -c "nginx -g 'daemon off;'"
+        build: 
+            context: .
+            dockerfile: Dockerfile.nginx
+        depends_on: 
+            - app
+        restart: always
+        container_name: nginx
+        networks: 
+            - node-nginx-net
+        ports: 
+            - "8080:80"
+
+networks: 
+    node-nginx-net: 
+        driver: bridge
+        

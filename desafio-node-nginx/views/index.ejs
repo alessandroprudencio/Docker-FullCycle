@@ -1,0 +1,28 @@
+<meta charset="UTF-8">
+<title>Desafio Docker -  Nginx</title>
+
+<!-- CSS (load bootstrap from a CDN) -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Full Cycle Rocks!</h1>
+            <h6>Pessoas cadastradas:</h6>
+            <ul>
+                <% users.forEach(function(user) { %>
+                    <li>
+                        <strong><%= user.name %></strong>
+                        - <%= moment(user.created_at).format('DD/MM/yyyy hh:mm')  %>
+                    </li>
+                <% }); %>
+            </ul>
+        </div>
+    </div>
+</body>
+<style>
+    body {
+        padding-top: 50px;
+    }
+</style>
