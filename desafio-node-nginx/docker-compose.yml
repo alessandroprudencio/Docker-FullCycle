@@ -9,13 +9,14 @@ services:
         entrypoint: dockerize -wait tcp://db:3306 -timeout 20s yarn run start
         volumes: 
             - ./:/usr/src/app
+            - /usr/src/app/node_modules
         networks: 
             - node-nginx-net
         depends_on: 
             - db
         restart: always
         ports: 
-            - "3000:3000"
+            - "3000"
     db:
         image: mysql:8.0.25
         volumes: 
@@ -29,7 +30,7 @@ services:
             MYSQL_DATABASE: nodenginx
             MYSQL_ROOT_PASSWORD: root
         ports: 
-            - "3306:3306"
+            - "3306"
     nginx:
         entrypoint: dockerize -wait tcp://app:3000 -timeout 20s
         command: /bin/sh -c "nginx -g 'daemon off;'"

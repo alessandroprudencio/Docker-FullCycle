@@ -1,7 +1,6 @@
 FROM node:lts-alpine3.13
 
 WORKDIR /usr/src/app
-
 COPY package.json yarn.lock /usr/src/app/
 
 RUN yarn install
@@ -16,6 +15,5 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
     && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-EXPOSE 3000
 
-ENTRYPOINT [ "yarn", "run", "start" ]
+EXPOSE 3000
